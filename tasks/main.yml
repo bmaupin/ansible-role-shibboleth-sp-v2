@@ -39,8 +39,8 @@
   become: yes
 
 - name: Copy shibboleth2.xml
-  copy:
-    src: shibboleth2.xml
+  template:
+    src: shibboleth2.xml.j2
     dest: /etc/shibboleth/shibboleth2.xml
     owner: root
     group: root
