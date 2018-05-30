@@ -38,6 +38,16 @@
     - shibd
   become: yes
 
+- name: Copy attribute-map.xml
+  copy:
+    src: attribute-map.xml
+    dest: /etc/shibboleth/attribute-map.xml
+    owner: root
+    group: root
+    mode: 0444
+  notify: Restart shibd
+  become: yes
+
 - name: Copy shibboleth2.xml
   template:
     src: shibboleth2.xml.j2
