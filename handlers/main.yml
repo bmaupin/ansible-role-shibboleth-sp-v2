@@ -1,0 +1,19 @@
+---
+- name: Restart firewalld
+  service:
+    name: firewalld
+    state: restarted
+  become: yes
+
+- name: Restart httpd
+  service:
+    name: httpd
+    state: restarted
+  become: yes
+
+- name: Restart shibd
+  service:
+    name: shibd
+    state: restarted
+  notify: Restart httpd
+  become: yes

@@ -1,0 +1,57 @@
+---
+- name: Enable Shibboleth SP repo
+  yum_repository:
+    name: shibboleth
+    description: Shibboleth (CentOS_7)
+    mirrorlist: https://shibboleth.net/cgi-bin/mirrorlist.cgi/CentOS_7
+    gpgkey: https://downloadcontent.opensuse.org/repositories/security:/shibboleth/CentOS_7/repodata/repomd.xml.key
+  become: yes
+
+- name: Install httpd, PHP, Shibboleth SP
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - httpd
+    - php
+    - shibboleth
+  become: yes
+
+- name: Open HTTP ports
+  firewalld:
+    port: "{{ item }}"
+    permanent: true
+    state: enabled
+  with_items:
+    - 80/tcp
+    - 443/tcp
+  notify: Restart firewalld
+  become: yes
+
+- name: Make sure httpd, shibd are running
+  service:
+    name: "{{ item }}"
+    state: started
+    enabled: yes
+  with_items:
+    - httpd
+    - shibd
+  become: yes
+
+- name: Copy shibboleth2.xml
+  copy:
+    src: shibboleth2.xml
+    dest: /etc/shibboleth/shibboleth2.xml
+    owner: root
+    group: root
+    mode: 0444
+  notify: Restart shibd
+  become: yes
+
+- name: Copy attribute viewer files
+  copy:
+    src: html/
+    dest: /var/www/html/
+    owner: root
+    group: root
+  become: yes
