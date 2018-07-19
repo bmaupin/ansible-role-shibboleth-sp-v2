@@ -1,17 +1,25 @@
-Ansible role for Shibboleth SP
+Ansible role for Shibboleth SP v2
 
 ### Features
 
-- Installs Shibboleth SP
+- Installs Shibboleth SP v2
 - Installs httpd and PHP
 - Installs minimal attribute viewer from https://github.com/bmaupin/shibboleth-attribute-viewer
 
 
+### Requirements
+
+- CentOS 7
+
+
 ### Instructions
 
-1. Include the role and customize files/shibboleth2.xml as desired
+1. Include the role and customize templates/shibboleth2.xml.j2 as desired
 
-2. Browse to http://hostname/secure/ to test Shibboleth login and view attributes
+2. Configure SP with an IdP. You can get the medatadata from here:
+    - http://hostname/Shibboleth.sso/Metadata (Replace hostname with the hostname of your SP)
+
+3. Browse to http://hostname/secure/ to test Shibboleth login and view attributes
 
 
 ### Sample playbook
