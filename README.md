@@ -1,8 +1,8 @@
-Ansible role for Shibboleth SP v2
+Ansible role for Shibboleth SP
 
 ### Features
 
-- Installs Shibboleth SP v2
+- Installs the latest version of Shibboleth SP (currently v3)
 - Installs httpd and PHP
 - Installs minimal attribute viewer from https://github.com/bmaupin/shibboleth-attribute-viewer
 
